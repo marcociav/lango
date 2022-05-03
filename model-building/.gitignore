@@ -1,0 +1,7 @@
+__pycache__/
+
+/data
+
+/langomb_venv
+/.idea
+/.ipynb_checkpoints
