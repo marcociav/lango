@@ -1,17 +1,30 @@
-import { React, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 
 export function Bar() {
 
-    const [text, setText] = useState('')
+    const [text, setText] = useState('');
 
-    return (  
-        <form action="/" method="get">
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        fetch(
+            'http://localhost:5000/lango',
+            {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({text: text})
+            }
+        )
+    }
+
+    return (
+        <form onSubmit={handleSubmit}>
             <input
                 type="text"
                 id="header-search"
                 placeholder="Enter some text"
-                name="s" 
+                onChange={(event) => setText(event.target.value)}
             />
             <button type="submit">Detect language</button>
         </form>
@@ -25,7 +38,7 @@ export function Results() {
     var text = ''; // get it from Bar component somehow
 
     useEffect(() => {
-        fetch(`http://localhost:3001/lango-model/${text}`)
+        fetch(`http://localhost:5000/lango-model/${text}`)
           .then((res) => res.json())
           .then((data) => setResults(data));
       }, [text]);
