@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 export function Bar() {
 
     const [text, setText] = useState('');
+    const [predictions, setPredictions] = useState([]);
+
+    const [detected, setDetected] = useState(false);
+    const [showMore, setShowMore] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -15,7 +19,28 @@ export function Bar() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({text: text})
             }
+        ).then(
+            (response) => {
+                console.log(response.data);
+                setDetected(true);
+            }
         )
+    }
+    var predictionComponent, showMoreComponent;
+
+    if (showMore) {
+        showMoreComponent = 
+            <div>
+                {/* Predictions other than first and related confidence (?) */}
+            </div>
+    }
+
+    if (detected) {
+        predictionComponent = 
+            <div>
+                {/* First prediction and related confidence (?) */}
+            </div>
+            showMoreComponent
     }
 
     return (
@@ -30,21 +55,3 @@ export function Bar() {
         </form>
     )
 } 
-
-
-export function Results() {
-    const [results, setResults] = useState();
-
-    var text = ''; // get it from Bar component somehow
-
-    useEffect(() => {
-        fetch(`http://localhost:5000/lango-model/${text}`)
-          .then((res) => res.json())
-          .then((data) => setResults(data));
-      }, [text]);
-  
-    // Similar to componentDidMount and componentDidUpdate:  useEffect(() => {    // Update the document title using the browser API    document.title = `You clicked ${count} times`;  });
-    return (
-        <div></div>
-    );
-  }
