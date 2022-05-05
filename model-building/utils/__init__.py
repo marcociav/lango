@@ -15,7 +15,8 @@ def tokenize_and_sequence(
     test_sentences, 
     num_words=NUM_WORDS, 
     maxlen=MAX_LEN
-):
+    ):
+    print(f"num_words: {num_words}")
     tok = Tokenizer(num_words=num_words, oov_token='<OOV>')
     tok.fit_on_texts(train_sentences)
     
@@ -33,6 +34,7 @@ def tokenize_and_sequence(
     
     return train_sequences, test_sequences, tok
 
+
 class LangoModel(tf.keras.Model):
     def __init__(self, vocab_dim=NUM_WORDS, max_len=MAX_LEN, num_classes=NUM_CLASSES):
         super(LangoModel, self).__init__()
@@ -44,13 +46,14 @@ class LangoModel(tf.keras.Model):
         self.classifier = layers.Dense(num_classes, activation='softmax')
     
     def call(self, inputs, training=False):
-        x = self.embedding(inputs, training=training)
-        x = self.lstm1(x, training=training)
-        x = self.lstm2(x, training=training)
-        x = self.dense(x, training=training)
+        x = self.embedding(inputs)
+        x = self.lstm1(x)
+        x = self.lstm2(x)
+        x = self.dense(x)
         if training:
             x = self.dropout(x, training=training)
-        return self.classifier(x, training=training)
+        return self.classifier(x)
+
 
 if __name__ == '__main__':
     model = LangoModel()

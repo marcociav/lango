@@ -1,15 +1,30 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 import uvicorn
 
-import pickle  # need to import tokenizer (to be saved in model training)
+import pickle
+import json
+
+import numpy as np
 from tensorflow import device
 from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+from operator import itemgetter
 
-with device('/CPU:0'):
+from schemas import Sentence, Predictions
+
+cpu = '/CPU:0'
+maxlen = 280
+
+with device(cpu):
     lango_model = load_model('models/lango_model_v1')
+
+with open('models/utils/tokenizer_v1.pickle', 'rb') as f:
+    tokenizer = pickle.load(f)
+
+with open('models/utils/num_to_lan.json') as f:
+    num_to_lan = json.load(f)
 
 app = FastAPI(
     name='Lango API'
@@ -30,9 +45,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class Sentence(BaseModel):
-    text: str
-
 
 @app.get('/')
 def home():
@@ -45,7 +57,26 @@ def home():
 def lango(sentence: Sentence):
     sentence = sentence.dict()
     sentence = sentence["text"]
-    # paused until tokenizer is ready
+    sentence = [sentence]
+    sentence = np.asarray(sentence)
+
+    sequence = tokenizer.texts_to_sequences(sentence)
+    sequence = pad_sequences(sequence, padding='post', maxlen=maxlen, truncating='post')
+
+    with device(cpu):
+        predictions = lango_model.predict(sequence)
+    predictions = list(predictions[0])
+
+    predictions = {int(num): float(conf) for num, conf in enumerate(predictions)}
+    predictions = dict((num_to_lan[str(num)], conf) for num, conf in predictions.items())  # str must be removed
+    predictions = [
+        {"language": lan, "confidence": conf}
+        for lan, conf in predictions.items()
+    ]
+    predictions = sorted(predictions, key=itemgetter("confidence"), reverse=True)
+
+    predictions = Predictions.parse_obj(predictions)
+    return predictions
 
 
 if __name__ == '__main__':
