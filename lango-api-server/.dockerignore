@@ -1,0 +1,6 @@
+__pycache__/
+
+/langoas_venv
+/.idea
+
+/models

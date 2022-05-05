@@ -25,10 +25,13 @@ storage_client = storage.Client()
 bucket = storage_client.get_bucket('lango-model')
 blobs = bucket.list_blobs(prefix='models/')  # Get list of files
 
-Path('./models/').mkdir(parents=True, exist_ok=True)
 for blob in blobs:
-    filename = blob.name.replace('/', '_')
-    blob.download_to_filename('models/' + filename)  # Download
+    filepath = blob.name
+    parent_path = filepath.split('/')
+    filename = parent_path.pop()
+    parent_path = '/'.join(parent_path)
+    Path(f'./{parent_path}').mkdir(parents=True, exist_ok=True)
+    blob.download_to_filename(filepath)  # Download
 
 cpu = '/CPU:0'
 maxlen = 280
