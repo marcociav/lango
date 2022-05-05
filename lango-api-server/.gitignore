@@ -1,8 +1,7 @@
 __pycache__/
 
-/data/sentences.csv
-
-
 /langoas_venv
 /.idea
-/.ipynb_checkpoints
+
+/models
+.env

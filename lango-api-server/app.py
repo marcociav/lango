@@ -14,6 +14,22 @@ from operator import itemgetter
 
 from schemas import Sentence, Predictions
 
+from dotenv import load_dotenv
+from pathlib import Path
+from google.cloud import storage
+
+
+load_dotenv()
+
+storage_client = storage.Client()
+bucket = storage_client.get_bucket('lango-model')
+blobs = bucket.list_blobs(prefix='models/')  # Get list of files
+
+Path('./models/').mkdir(parents=True, exist_ok=True)
+for blob in blobs:
+    filename = blob.name.replace('/', '_')
+    blob.download_to_filename('models/' + filename)  # Download
+
 cpu = '/CPU:0'
 maxlen = 280
 
