@@ -1,0 +1,14 @@
+.container {
+    height: 100vh; /* Magic here */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.predictions-details {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}

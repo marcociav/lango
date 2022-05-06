@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import './Components.css'
 
 
 export function Bar() {
@@ -19,39 +20,82 @@ export function Bar() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({text: text})
             }
-        ).then(
-            (response) => {
-                console.log(response.data);
+        ).then((res) => { return res.json(); })
+        .then(
+            (json) => {
                 setDetected(true);
+                setShowMore(false);
+
+                json = json.slice(0, 5); // get top 5 predictions
+                json = json.map((p) => {
+                    p.confidence = p.confidence * 100;
+                    p.confidence = p.confidence.toLocaleString("en-US", {
+                        maximumFractionDigits: 4, minimumFractionDigits: 4
+                    });
+                    return p;
+                }
+                )
+                setPredictions(json);
             }
         )
     }
+
     var predictionComponent, showMoreComponent;
 
     if (showMore) {
         showMoreComponent = 
-            <div>
-                {/* Predictions other than first and related confidence (?) */}
+            <div id="top-prediction" className="predictions">
+                <ul className="predictions-list">
+                    {predictions.slice(1).map(
+                        p => {
+                            return (
+                                <li key={p.language}>
+                                    <ul className="predictions-details">
+                                        <li>{p.language}</li>
+                                        <li>{`Confidence:${p.confidence}%`}</li>
+                                    </ul>
+                                </li>
+                            )
+                        }
+                    )}
+                </ul>
             </div>
     }
 
     if (detected) {
         predictionComponent = 
-            <div>
-                {/* First prediction and related confidence (?) */}
+            <div id="more-predictions" className="predictions">
+                <ul className="predictions-list">
+                    {predictions.slice(0, 1).map(
+                        p => {
+                            return(
+                                <li key={p.language}>
+                                    <ul className="predictions-details">
+                                        <li>{p.language}</li>
+                                        <li>{`Confidence:${p.confidence}%`}</li>
+                                    </ul>
+                                </li>
+                            )
+                        }
+                    )}
+                </ul>
+                <button onClick={() => setShowMore(true)}>Show more</button>
+            {showMoreComponent}
             </div>
-            showMoreComponent
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                id="header-search"
-                placeholder="Enter some text"
-                onChange={(event) => setText(event.target.value)}
-            />
-            <button type="submit">Detect language</button>
-        </form>
+        <div className="container">
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    id="text-bar"
+                    placeholder="Enter some text"
+                    onChange={(event) => setText(event.target.value)}
+                />
+                <button type="submit">Detect language</button>
+            </form>
+            {predictionComponent}
+        </div>
     )
 } 
