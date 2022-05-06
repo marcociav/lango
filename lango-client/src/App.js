@@ -1,10 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import { Bar } from './Components'
+import { Main } from './Components'
 
 function App() {
   return (
-    <Bar></Bar>
+    <div>
+      <Main/>
+    </div>
+    
   );
 }
 

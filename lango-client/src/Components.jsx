@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import './Components.css'
+import './Components.css';
+import logo from './logo.png'
 
-
-export function Bar() {
+export function Main() {
 
     const [text, setText] = useState('');
     const [predictions, setPredictions] = useState([]);
 
     const [detected, setDetected] = useState(false);
-    const [showMore, setShowMore] = useState(false);
+    const [showingMore, setShowingMore] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -24,7 +24,7 @@ export function Bar() {
         .then(
             (json) => {
                 setDetected(true);
-                setShowMore(false);
+                setShowingMore(false);
 
                 json = json.slice(0, 5); // get top 5 predictions
                 json = json.map((p) => {
@@ -40,30 +40,22 @@ export function Bar() {
         )
     }
 
-    var predictionComponent, showMoreComponent;
-
-    if (showMore) {
-        showMoreComponent = 
-            <div id="top-prediction" className="predictions">
-                <ul className="predictions-list">
-                    {predictions.slice(1).map(
-                        p => {
-                            return (
-                                <li key={p.language}>
-                                    <ul className="predictions-details">
-                                        <li>{p.language}</li>
-                                        <li>{`Confidence:${p.confidence}%`}</li>
-                                    </ul>
-                                </li>
-                            )
-                        }
-                    )}
-                </ul>
-            </div>
-    }
-
-    if (detected) {
-        predictionComponent = 
+    return (
+        <div className="container">
+            <img className="logo" src={logo} alt="{Lango}"></img>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    id="text-bar"
+                    minlength="1"
+                    maxlength="280"
+                    size="80"
+                    onChange={(event) => setText(event.target.value)}
+                />
+                <div className="button-container">
+                    <button type="submit">Detect language</button>
+                </div>
+            </form>
             <div id="more-predictions" className="predictions">
                 <ul className="predictions-list">
                     {predictions.slice(0, 1).map(
@@ -71,33 +63,43 @@ export function Bar() {
                             return(
                                 <li key={p.language}>
                                     <ul className="predictions-details">
-                                        <li>{p.language}</li>
-                                        <li>{`Confidence:${p.confidence}%`}</li>
+                                        <li>{detected ? p.language : ' '}</li>
+                                        <li>{detected ? `Confidence:${p.confidence}%` : ' '}</li>
                                     </ul>
                                 </li>
                             )
                         }
                     )}
                 </ul>
-                <button onClick={() => setShowMore(true)}>Show more</button>
-            {showMoreComponent}
+                <div className="button-container">
+                    {
+                        detected ? 
+                        <button onClick={() => setShowingMore(!showingMore)}>
+                            {showingMore ? 'Show Less' : 'Show More'}
+                        </button> :
+                        ''
+                    }
+                </div>
+                <div id="top-prediction" className="predictions">
+                    <ul className="predictions-list">
+                        {predictions.slice(1).map(
+                            p => {
+                                return (
+                                    <li key={p.language}>
+                                        <ul className="predictions-details">
+                                            <li>
+                                               {showingMore ? p.language: ' '} 
+                                                {showingMore ? `Confidence:${p.confidence}%`: ' '}
+                                             
+                                            </li>
+                                        </ul>
+                                    </li>
+                                )
+                            }
+                        )}
+                    </ul>
+                </div>
             </div>
-    }
-
-    return (
-        <div className="container">
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    minlength="1"
-                    maxlength="280"
-                    id="text-bar"
-                    placeholder="Enter some text"
-                    onChange={(event) => setText(event.target.value)}
-                />
-                <button type="submit">Detect language</button>
-            </form>
-            {predictionComponent}
         </div>
     )
 } 

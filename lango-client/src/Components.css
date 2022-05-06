@@ -1,8 +1,57 @@
 .container {
     height: 100vh; /* Magic here */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+input[type=text] {
+    position: relative;
+    background-color: white;
+    padding: 1vh 20px;
+    font-size: 16px;
+    text-align: left;
+    border-radius: 2vh;
+    border: 2px solid rgb(220, 220, 220)
+}
+
+input[type=text]:focus {
+    outline: none !important;
+    background-color: white;
+}
+
+input[type=text]:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+button {
+    background-color: rgb(220, 220, 220);
+    color: rgb(57, 57, 57);
+    font-size: 16px;
+    padding: 1vh 24px;
+    border-radius: 5px;
+    border: 0px solid;
+    margin: 10px 0px;
+    cursor: pointer;
+}
+
+button:hover {
+    border: 2px solid rgb(191, 191, 191);
+    margin: 8px 0px;
+}
+
+button:active {
+    border: 2px solid rgb(132, 209, 235);
+    margin: 8px 0px;
+}
+
+.button-container {
+    text-align: center
+}
+
+.predictions-list {
+    list-style-type: none;
 }
 
 .predictions-details {
@@ -11,22 +60,4 @@
     list-style-type: none;
     padding-top: 3px;
     padding-bottom: 3px;
-}
-
-button {
-    background-color: rgb(188, 188, 188);
-    color: white;
-    font-size: 16px;
-    padding: 1vh 24px;
-    border-radius: 10px;
-    border-color: rgb(188, 188, 188);
-    margin: 10px 0px;
-    cursor: pointer;
-}
-
-input {
-    background-color: white;
-    padding: 1vh 10vw;
-    font-size: 16px;
-    border-radius: 2vh;
 }
