@@ -18,10 +18,6 @@ from dotenv import load_dotenv
 from pathlib import Path
 from google.cloud import storage
 
-import logging
-
-
-logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 
@@ -82,9 +78,9 @@ def home():
 
 
 @app.post('/lango')
-def lango(sentence: Sentence):
+def lango(sentence: Sentence) -> Predictions:
     sentence = sentence.dict()
-    logging.info(f"Request body: {sentence}")
+    # maybe log request body here
 
     sentence = sentence["text"]
     sentence = [sentence]
@@ -101,17 +97,16 @@ def lango(sentence: Sentence):
     predictions = dict((num_to_lan[str(num)], conf) for num, conf in predictions.items())  # str must be removed
     predictions = dict((lan_to_language[lan], conf) for lan, conf in predictions.items())  # certain lan map to lan
 
-    predictions = [
-        {"language": lan, "confidence": conf}
-        for lan, conf in predictions.items()
-    ]
-
+    predictions = [{"language": lan, "confidence": conf} for lan, conf in predictions.items()]
     predictions = sorted(predictions, key=itemgetter("confidence"), reverse=True)
-    logging.info(f"Response body: {predictions}")
+    # maybe log response body here
 
     predictions = Predictions.parse_obj(predictions)
     return predictions
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='0.0.0.0', port=5000)
+    log_config = uvicorn.config.LOGGING_CONFIG
+    log_config["formatters"]["access"]["fmt"] = "%(asctime)s - %(levelname)s - %(message)s"
+    log_config["formatters"]["default"]["fmt"] = "%(asctime)s - %(levelname)s - %(message)s"
+    uvicorn.run(app, host='0.0.0.0', port=5000, log_config=log_config)
