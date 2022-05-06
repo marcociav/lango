@@ -18,6 +18,10 @@ from dotenv import load_dotenv
 from pathlib import Path
 from google.cloud import storage
 
+import logging
+
+
+logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 
@@ -29,9 +33,11 @@ for blob in blobs:
     filepath = blob.name
     parent_path = filepath.split('/')
     filename = parent_path.pop()
-    parent_path = '/'.join(parent_path)
+
+    parent_path = '/'.join(parent_path)  # Create subfolders if they don't exist
     Path(f'./{parent_path}').mkdir(parents=True, exist_ok=True)
-    blob.download_to_filename(filepath)  # Download
+
+    blob.download_to_filename(filepath)
 
 cpu = '/CPU:0'
 maxlen = 280
@@ -44,6 +50,9 @@ with open('models/utils/tokenizer_v1.pickle', 'rb') as f:
 
 with open('models/utils/num_to_lan.json') as f:
     num_to_lan = json.load(f)
+
+with open('models/utils/lan_to_language.json') as f:
+    lan_to_language = json.load(f)
 
 app = FastAPI(
     name='Lango API'
@@ -75,6 +84,8 @@ def home():
 @app.post('/lango')
 def lango(sentence: Sentence):
     sentence = sentence.dict()
+    logging.info(f"Request body: {sentence}")
+
     sentence = sentence["text"]
     sentence = [sentence]
     sentence = np.asarray(sentence)
@@ -88,11 +99,15 @@ def lango(sentence: Sentence):
 
     predictions = {int(num): float(conf) for num, conf in enumerate(predictions)}
     predictions = dict((num_to_lan[str(num)], conf) for num, conf in predictions.items())  # str must be removed
+    predictions = dict((lan_to_language[lan], conf) for lan, conf in predictions.items())  # certain lan map to lan
+
     predictions = [
         {"language": lan, "confidence": conf}
         for lan, conf in predictions.items()
     ]
+
     predictions = sorted(predictions, key=itemgetter("confidence"), reverse=True)
+    logging.info(f"Response body: {predictions}")
 
     predictions = Predictions.parse_obj(predictions)
     return predictions
