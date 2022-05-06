@@ -89,6 +89,8 @@ export function Bar() {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
+                    minlength="1"
+                    maxlength="280"
                     id="text-bar"
                     placeholder="Enter some text"
                     onChange={(event) => setText(event.target.value)}

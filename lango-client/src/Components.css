@@ -12,3 +12,21 @@
     padding-top: 3px;
     padding-bottom: 3px;
 }
+
+button {
+    background-color: rgb(188, 188, 188);
+    color: white;
+    font-size: 16px;
+    padding: 1vh 24px;
+    border-radius: 10px;
+    border-color: rgb(188, 188, 188);
+    margin: 10px 0px;
+    cursor: pointer;
+}
+
+input {
+    background-color: white;
+    padding: 1vh 10vw;
+    font-size: 16px;
+    border-radius: 2vh;
+}
