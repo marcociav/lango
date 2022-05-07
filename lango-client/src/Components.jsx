@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Components.css';
 import logo from './logo.png'
 
-export function Main() {
+export function Lango() {
 
     const [text, setText] = useState('');
     const [predictions, setPredictions] = useState([]);
@@ -54,66 +54,52 @@ export function Main() {
                         size="80"
                         onChange={(event) => setText(event.target.value)}
                     />
-                    <div className="button-container">
+                    <div id="detect-language-button-container" className="button-container">
                         <button type="submit">Detect language</button>
                     </div>
                 </form>
             </div>
-            <div id="top-prediction-container" className="predictions">
-                <ul className="predictions-list">
-                    {predictions.slice(0, 1).map(
-                        p => {
-                            return(
-                                <PredictionDetails
-                                    showing={detected}
-                                    language={p.language} confidence={p.confidence}
-                                />
-                            )
-                        }
-                    )}
-                </ul>
-                <div className="button-container">
-                    {
-                        detected ? 
-                        <button onClick={() => setShowingMore(!showingMore)}>
-                            {showingMore ? 'Show Less' : 'Show More'}
-                        </button> :
-                        ''
-                    }
-                </div>
+            <Predictions
+                id="top-predictions-container"
+                showing={detected}
+                predictions={predictions.slice(0, 1)}
+            />
+            <div id="show-more-button-container" className="button-container">
+                {
+                    detected ? 
+                    <button onClick={() => setShowingMore(!showingMore)}>
+                        {showingMore ? 'Show Less' : 'Show More'}
+                    </button> :
+                    ''
+                }
             </div>
-            <div id="more-predictions-container" className="predictions">
-                <ul className="predictions-list">
-                    {predictions.slice(1).map(
-                        p => {
-                            return (
-                                <PredictionDetails
-                                    showing={showingMore}
-                                    language={p.language} confidence={p.confidence}
-                                />
-                            )
-                        }
-                    )}
-                </ul>
-            </div>
+            <Predictions
+                id="more-predictions-container"
+                showing={showingMore}
+                predictions={predictions.slice(1)}
+            />
         </div>
     )
 } 
 
 
-function PredictionDetails(props) {
-    return (
-        <li key={props.language}>
-            <ul className="predictions-details">
-                <li>{props.showing ? props.language : ' '}</li>
-                <li>{props.showing ? `Confidence:${props.confidence}%` : ' '}</li>
-            </ul>
-        </li>
-    )
-}
-
 function Predictions(props) {
     return (
-        <div> TODO wrap className=prediction in this function</div>
+        <div id={props.id} className="predictions">
+                <ul className="predictions-list">
+                    {props.predictions.map(
+                        p => {
+                            return (
+                                <li key={p.language}>
+                                    <ul className="predictions-details">
+                                        <li>{props.showing ? p.language : ' '}</li>
+                                        <li>{props.showing ? `Confidence:${p.confidence}%` : ' '}</li>
+                                    </ul>
+                                </li>
+                            )
+                        }
+                    )}
+                </ul>
+            </div>
     )
 }

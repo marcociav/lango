@@ -1,10 +1,10 @@
 import './App.css';
-import { Main } from './Components'
+import { Lango } from './Components'
 
 function App() {
   return (
     <div>
-      <Main/>
+      <Lango/>
     </div>
     
   );
