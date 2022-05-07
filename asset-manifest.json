@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/lango/static/css/main.f386f313.css",
+    "main.js": "/lango/static/js/main.7af24462.js",
+    "static/js/787.6903d712.chunk.js": "/lango/static/js/787.6903d712.chunk.js",
+    "index.html": "/lango/index.html",
+    "main.f386f313.css.map": "/lango/static/css/main.f386f313.css.map",
+    "main.7af24462.js.map": "/lango/static/js/main.7af24462.js.map",
+    "787.6903d712.chunk.js.map": "/lango/static/js/787.6903d712.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f386f313.css",
+    "static/js/main.7af24462.js"
+  ]
+}
