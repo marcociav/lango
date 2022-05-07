@@ -14,7 +14,7 @@ export function Lango() {
         event.preventDefault();
 
         fetch(
-            'http://localhost:5000/lango',
+            'https://lango-api-b3hh67rrkq-pd.a.run.app/lango',
             {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
