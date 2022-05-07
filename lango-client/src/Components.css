@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+* {
+    font-family: 'Lato', sans-serif;
+}
+
 .container {
     height: 100vh; /* Magic here */
     display: flex;
@@ -28,7 +34,7 @@
 
 #more-predictions-container {
     position: absolute;
-    top: 62vh /* add max pixels to prevent overlay */
+    top: 60vh /* add max pixels to prevent overlay */
 }
 
 
@@ -77,12 +83,28 @@ button:active {
 
 .predictions-list {
     list-style-type: none;
+    padding-top: 2px;
+    padding-bottom: 2px
 }
 
 .predictions-details {
     display: flex;
     flex-direction: row;
     list-style-type: none;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    text-align: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.predictions-details > dt {
+    width: 250px;
+    word-wrap: break-word;
+    text-align: center;
+    font-size: 22pt;
+    margin: auto
+}
+
+.predictions-details > dd {
+    font-size: 14pt;
+    margin: auto
 }

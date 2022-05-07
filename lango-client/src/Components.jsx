@@ -32,6 +32,12 @@ export function Lango() {
                     p.confidence = p.confidence.toLocaleString("en-US", {
                         maximumFractionDigits: 4, minimumFractionDigits: 4
                     });
+                    if (p.confidence === "100.0000") {
+                        p.confidence = "~100";
+                    }
+                    else if (p.confidence === "0.0000") {
+                        p.confidence = "~0"
+                    }
                     return p;
                 }
                 )
@@ -91,10 +97,10 @@ function Predictions(props) {
                         p => {
                             return (
                                 <li key={p.language}>
-                                    <ul className="predictions-details">
-                                        <li>{props.showing ? p.language : ' '}</li>
-                                        <li>{props.showing ? `Confidence:${p.confidence}%` : ' '}</li>
-                                    </ul>
+                                    <dl className="predictions-details">
+                                        <dt>{props.showing ? p.language : ' '}</dt>
+                                        <dd>{props.showing ? `Confidence: ${p.confidence}%` : ' '}</dd>
+                                    </dl>
                                 </li>
                             )
                         }
