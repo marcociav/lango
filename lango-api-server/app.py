@@ -50,8 +50,12 @@ with open('models/utils/num_to_lan.json') as f:
 with open('models/utils/lan_to_language.json') as f:
     lan_to_language = json.load(f)
 
+with open('.version') as f:
+    version = f.read()
+
 app = FastAPI(
-    name='Lango API'
+    name='Lango API',
+    version=version
 )
 
 origins = ["*"]
