@@ -54,14 +54,7 @@ app = FastAPI(
     name='Lango API'
 )
 
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-    "http://marcociav.github.io/",
-    "http://marcociav.githu.io/lango",
-    "https://marcociav.github.io/",
-    "https://marcociav.githu.io/lango"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
