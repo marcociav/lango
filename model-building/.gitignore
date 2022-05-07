@@ -6,3 +6,5 @@ __pycache__/
 /langomb_venv
 /.idea
 /.ipynb_checkpoints
+
+/models
