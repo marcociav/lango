@@ -6,8 +6,27 @@
     align-items: center;
 }
 
+.logo-container {
+    position: absolute;
+    top: 24vh /* add max pixels to prevent overlay */
+}
+
+.bar-container {
+    position: absolute;
+    top: 36vh /* add max pixels to prevent overlay */
+}
+
+#top-prediction-container {
+    position: absolute;
+    top: 48vh /* add max pixels to prevent overlay */
+}
+
+#more-predictions-container {
+    position: absolute;
+    top: 62vh /* add max pixels to prevent overlay */
+}
+
 input[type=text] {
-    position: relative;
     background-color: white;
     padding: 1vh 20px;
     font-size: 16px;
@@ -32,18 +51,18 @@ button {
     padding: 1vh 24px;
     border-radius: 5px;
     border: 0px solid;
-    margin: 10px 0px;
+    margin: 16px 0px;
     cursor: pointer;
 }
 
 button:hover {
     border: 2px solid rgb(191, 191, 191);
-    margin: 8px 0px;
+    margin: 14px 0px;
 }
 
 button:active {
     border: 2px solid rgb(132, 209, 235);
-    margin: 8px 0px;
+    margin: 14px 0px;
 }
 
 .button-container {

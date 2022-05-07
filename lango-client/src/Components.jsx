@@ -42,31 +42,32 @@ export function Main() {
 
     return (
         <div className="container">
-            <img className="logo" src={logo} alt="{Lango}"></img>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    id="text-bar"
-                    minlength="1"
-                    maxlength="280"
-                    size="80"
-                    onChange={(event) => setText(event.target.value)}
-                />
-                <div className="button-container">
-                    <button type="submit">Detect language</button>
-                </div>
-            </form>
-            <div id="more-predictions" className="predictions">
+            <div className="logo-container">
+                <img className="logo" src={logo} alt="{Lango}"></img>
+            </div>
+            <div className="bar-container">
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        minlength="1"
+                        maxlength="280"
+                        size="80"
+                        onChange={(event) => setText(event.target.value)}
+                    />
+                    <div className="button-container">
+                        <button type="submit">Detect language</button>
+                    </div>
+                </form>
+            </div>
+            <div id="top-prediction-container" className="predictions">
                 <ul className="predictions-list">
                     {predictions.slice(0, 1).map(
                         p => {
                             return(
-                                <li key={p.language}>
-                                    <ul className="predictions-details">
-                                        <li>{detected ? p.language : ' '}</li>
-                                        <li>{detected ? `Confidence:${p.confidence}%` : ' '}</li>
-                                    </ul>
-                                </li>
+                                <PredictionDetails
+                                    showing={detected}
+                                    language={p.language} confidence={p.confidence}
+                                />
                             )
                         }
                     )}
@@ -80,26 +81,39 @@ export function Main() {
                         ''
                     }
                 </div>
-                <div id="top-prediction" className="predictions">
-                    <ul className="predictions-list">
-                        {predictions.slice(1).map(
-                            p => {
-                                return (
-                                    <li key={p.language}>
-                                        <ul className="predictions-details">
-                                            <li>
-                                               {showingMore ? p.language: ' '} 
-                                                {showingMore ? `Confidence:${p.confidence}%`: ' '}
-                                             
-                                            </li>
-                                        </ul>
-                                    </li>
-                                )
-                            }
-                        )}
-                    </ul>
-                </div>
+            </div>
+            <div id="more-predictions-container" className="predictions">
+                <ul className="predictions-list">
+                    {predictions.slice(1).map(
+                        p => {
+                            return (
+                                <PredictionDetails
+                                    showing={showingMore}
+                                    language={p.language} confidence={p.confidence}
+                                />
+                            )
+                        }
+                    )}
+                </ul>
             </div>
         </div>
     )
 } 
+
+
+function PredictionDetails(props) {
+    return (
+        <li key={props.language}>
+            <ul className="predictions-details">
+                <li>{props.showing ? props.language : ' '}</li>
+                <li>{props.showing ? `Confidence:${props.confidence}%` : ' '}</li>
+            </ul>
+        </li>
+    )
+}
+
+function Predictions(props) {
+    return (
+        <div> TODO wrap className=prediction in this function</div>
+    )
+}
