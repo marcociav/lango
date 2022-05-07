@@ -1,3 +1,7 @@
+Dockerfile
+.env
+lango_client_secret.json
+
 __pycache__/
 
 /langoas_venv

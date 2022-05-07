@@ -57,8 +57,10 @@ app = FastAPI(
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    "http://marcociav.github.io/"
-    "http://marcociav.githu.io/lango"
+    "http://marcociav.github.io/",
+    "http://marcociav.githu.io/lango",
+    "https://marcociav.github.io/",
+    "https://marcociav.githu.io/lango"
 ]
 
 app.add_middleware(
