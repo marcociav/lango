@@ -9,12 +9,14 @@ export function Lango() {
 
     const [detected, setDetected] = useState(false);
     const [showingMore, setShowingMore] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
 
         fetch(
-            'https://lango-api-b3hh67rrkq-pd.a.run.app/lango',
+            'http://localhost:5000/lango',
             {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -42,6 +44,7 @@ export function Lango() {
                 }
                 )
                 setPredictions(json);
+                setIsLoading(false);
             }
         )
     }
@@ -55,13 +58,14 @@ export function Lango() {
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        minlength="1"
-                        maxlength="280"
+                        minLength="1"
+                        maxLength="280"
                         size="80"
                         onChange={(event) => setText(event.target.value)}
                     />
+                    <LoadingSpinner isLoading={isLoading}/>
                     <div id="detect-language-button-container" className="button-container">
-                        <button type="submit">Detect language</button>
+                        <button type="submit" disabled={isLoading}>Detect language</button>
                     </div>
                 </form>
             </div>
@@ -99,7 +103,7 @@ function Predictions(props) {
                                 <li key={p.language}>
                                     <dl className="predictions-details">
                                         <dt>{props.showing ? p.language : ' '}</dt>
-                                        <dd>{props.showing ? `Confidence: ${p.confidence}%` : ' '}</dd>
+                                        <dd>{props.showing ? `Confidence:\n${p.confidence}%` : ' '}</dd>
                                     </dl>
                                 </li>
                             )
@@ -107,5 +111,15 @@ function Predictions(props) {
                     )}
                 </ul>
             </div>
+    )
+}
+
+
+function LoadingSpinner(props) {
+    let loadingSpinner = props.isLoading ? <div className="loading-spinner"></div>: <div></div>;
+    return (
+        <div className="spinner-container">
+            {loadingSpinner}
+        </div>
     )
 }
