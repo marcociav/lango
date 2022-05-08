@@ -22,9 +22,9 @@
     top: 36vh /* add max pixels to prevent overlay */
 }
 
-#top-prediction-container {
+#top-predictions-container {
     position: absolute;
-    top: 48vh /* add max pixels to prevent overlay */
+    top: 46vh /* add max pixels to prevent overlay */
 }
 
 #show-more-button-container {
