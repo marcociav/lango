@@ -21,9 +21,11 @@ from google.cloud import storage
 
 load_dotenv()
 
+models_dir = 'models-live'
+
 storage_client = storage.Client()
 bucket = storage_client.get_bucket('lango-model')
-blobs = bucket.list_blobs(prefix='models/')  # Get list of files
+blobs = bucket.list_blobs(prefix=models_dir + '/')  # Get list of files
 
 for blob in blobs:
     filepath = blob.name
@@ -32,22 +34,23 @@ for blob in blobs:
 
     parent_path = '/'.join(parent_path)  # Create subfolders if they don't exist
     Path(f'./{parent_path}').mkdir(parents=True, exist_ok=True)
-
-    blob.download_to_filename(filepath)
+    if filename != '':
+        blob.download_to_filename(filepath)
 
 cpu = '/CPU:0'
-maxlen = 280
+maxlen = 140
+v = 'v2'
 
 with device(cpu):
-    lango_model = load_model('models/lango_model_v1')
+    lango_model = load_model(f'{models_dir}/lango_model_{v}')
 
-with open('models/utils/tokenizer_v1.pickle', 'rb') as f:
+with open(f'{models_dir}/utils/tokenizer_{v}.pickle', 'rb') as f:
     tokenizer = pickle.load(f)
 
-with open('models/utils/num_to_lan.json') as f:
+with open(f'{models_dir}/utils/num_to_lan.json') as f:
     num_to_lan = json.load(f)
 
-with open('models/utils/lan_to_language.json') as f:
+with open(f'{models_dir}/utils/lan_to_language.json') as f:
     lan_to_language = json.load(f)
 
 with open('.version') as f:

@@ -4,5 +4,6 @@ __pycache__/
 /.idea
 
 /models
+/models-live
 .env
 lango_client_secret.json
