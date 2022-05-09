@@ -14,36 +14,37 @@
 
 .logo-container {
     position: absolute;
-    top: 24vh /* add max pixels to prevent overlay */
+    top: max(24vh, 240px) /* add max pixels to prevent overlay */
 }
 
 .bar-container {
     position: absolute;
-    top: 36vh /* add max pixels to prevent overlay */
+    top: max(36vh, 360px) /* add max pixels to prevent overlay */
 }
 
 #top-predictions-container {
     position: absolute;
-    top: 46vh /* add max pixels to prevent overlay */
+    top: max(46vh, 460px) /* add max pixels to prevent overlay */
 }
 
 #show-more-button-container {
     position: absolute;
-    top: 54vh
+    top: max(55vh, 550px)
 }
 
 #more-predictions-container {
     position: absolute;
-    top: 60vh /* add max pixels to prevent overlay */
+    top: max(60vh, 600px) /* add max pixels to prevent overlay */
 }
 
 
 input[type=text] {
     background-color: white;
+    width: max(36vw, 320px);
     padding: 10px 20px;
     font-size: 16px;
     text-align: left;
-    border-radius: 2vh;
+    border-radius: 16px;
     border: 2px solid rgb(220, 220, 220)
 }
 
@@ -64,7 +65,7 @@ button {
     background-color: rgb(220, 220, 220);
     color: rgb(57, 57, 57);
     font-size: 16px;
-    padding: 1vh 24px;
+    padding: 8px 24px;
     border-radius: 5px;
     border: 0px solid;
     margin: 16px 0px;
@@ -106,7 +107,7 @@ button:disabled{
 }
 
 .predictions-details > dt {
-    width: 250px;
+    width: 150px;
     word-wrap: break-word;
     text-align: center;
     font-size: 22pt;
@@ -115,7 +116,7 @@ button:disabled{
 }
 
 .predictions-details > dd {
-    width: 250px;
+    width: 150px;
     text-align: center;
     font-size: 14pt;
     padding-left: 10px;

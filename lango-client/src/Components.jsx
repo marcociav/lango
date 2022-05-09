@@ -60,7 +60,6 @@ export function Lango() {
                         type="text"
                         minLength="1"
                         maxLength="280"
-                        size="80"
                         onChange={(event) => setText(event.target.value)}
                     />
                     <LoadingSpinner isLoading={isLoading}/>
