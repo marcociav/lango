@@ -40,7 +40,7 @@
 
 input[type=text] {
     background-color: white;
-    width: max(36vw, 320px);
+    width: max(36vw, 280px);
     padding: 10px 20px;
     font-size: 16px;
     text-align: left;
