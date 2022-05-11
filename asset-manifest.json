@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/lango/static/css/main.32073e16.css",
-    "main.js": "/lango/static/js/main.32cc78f3.js",
+    "main.js": "/lango/static/js/main.66181f6f.js",
     "static/js/787.6903d712.chunk.js": "/lango/static/js/787.6903d712.chunk.js",
     "index.html": "/lango/index.html",
     "main.32073e16.css.map": "/lango/static/css/main.32073e16.css.map",
-    "main.32cc78f3.js.map": "/lango/static/js/main.32cc78f3.js.map",
+    "main.66181f6f.js.map": "/lango/static/js/main.66181f6f.js.map",
     "787.6903d712.chunk.js.map": "/lango/static/js/787.6903d712.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.32073e16.css",
-    "static/js/main.32cc78f3.js"
+    "static/js/main.66181f6f.js"
   ]
 }
