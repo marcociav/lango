@@ -1,7 +1,7 @@
 __pycache__/
 
 /data/sentences.csv
-
+data/test_set.csv
 
 /langomb_venv
 /.idea
