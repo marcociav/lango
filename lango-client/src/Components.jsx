@@ -52,7 +52,7 @@ export function Lango() {
     return (
         <div className="container">
             <div className="logo-container">
-                <img className="logo" src={logo} alt="{Lango}"></img>
+                <h1 style={{fontFamily: "Arial", fontSize: "52px"}}>LANGO</h1>
             </div>
             <div className="bar-container">
                 <form onSubmit={handleSubmit}>
